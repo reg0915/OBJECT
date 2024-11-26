@@ -38,6 +38,9 @@ return $this ->fetchAll($sql);
     }
 
 
+
+
+// find
     function find($id){
         $sql="SELECT * FROM $this->table ";
         if(is_array($id)){
@@ -48,6 +51,20 @@ return $this ->fetchAll($sql);
         }
         return $this->fetchOne($sql);
     }
+
+// del
+    function del($id){
+        $sql="DELETE FROM $this->table ";
+        if(is_array($id)){
+            $where=$this->a2s($id);
+            $sql=$sql . " WHERE ". join(" && ",$where);
+        }else{
+            $sql .= " WHERE `id`='$id' ";
+        }
+        echo $sql;  
+        return $this->pdo->exec($sql);
+    }
+
     // 
     // 把陣列轉成條件字串陣列
     // 
@@ -85,6 +102,6 @@ function dd($array){
 $DEPT=new DB('dept');
 
 //$dept=$DEPT->q("SELECT * FROM dept");
-$dept=$DEPT->find(['code'=>'404']);
+$dept=$DEPT->find(['code'=>'504']);
 
 dd($dept);
